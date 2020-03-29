@@ -1,7 +1,9 @@
 package com.nikolanedeljkovic.flightadvisor.service;
 
-import com.nikolanedeljkovic.flightadvisor.user.User;
+import com.nikolanedeljkovic.flightadvisor.domain.user.Login;
+import com.nikolanedeljkovic.flightadvisor.domain.user.User;
 
 public interface UserService {
-	User signUpUser(User user);
+	String signUpUser(User user);
+	String login(Login login);
 }

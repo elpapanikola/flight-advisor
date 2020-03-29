@@ -5,8 +5,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nikolanedeljkovic.flightadvisor.domain.user.Login;
+import com.nikolanedeljkovic.flightadvisor.domain.user.User;
 import com.nikolanedeljkovic.flightadvisor.service.UserServiceImpl;
-import com.nikolanedeljkovic.flightadvisor.user.User;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,9 +18,14 @@ public class UserController {
 	
 	private final UserServiceImpl userService;
 	
-	@PostMapping
-	public User signUpUser(@RequestBody User user) {
+	@PostMapping("/signup")
+	public String signUpUser(@RequestBody User user) {
 		return userService.signUpUser(user);
+	}
+	
+	@PostMapping("/login")
+	public String logIn(@RequestBody Login login) {
+		return userService.login(login);
 	}
 	
 }
