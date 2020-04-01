@@ -1,14 +1,12 @@
 package com.nikolanedeljkovic.flightadvisor.domain.airport;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.TimeZone;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import com.nikolanedeljkovic.flightadvisor.domain.city.City;
 
@@ -26,11 +24,7 @@ public class Airport {
 
 	@Id
 	private Long Id;
-	
-	/*
-	 * @Column private String airportId;
-	 */
-	
+
 	@Column
 	private String name;
 	
@@ -46,10 +40,10 @@ public class Airport {
 	@Column
 	private String ICAO;
 	
-	@Column
+	@Column(precision = 10, scale = 6)
 	private BigDecimal latitude;
 	
-	@Column
+	@Column(precision = 10, scale = 6)
 	private BigDecimal longitude;
 	
 	@Column
@@ -70,6 +64,4 @@ public class Airport {
 	@Column
 	private String informationSource;
 	
-	@OneToMany
-	private List<Route> routes;
 }

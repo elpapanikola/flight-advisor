@@ -7,6 +7,5 @@ public interface AirportService {
 	void uploadAirports(MultipartFile file);
 
 	void uploadRoutes(MultipartFile file);
-
 	
 }
