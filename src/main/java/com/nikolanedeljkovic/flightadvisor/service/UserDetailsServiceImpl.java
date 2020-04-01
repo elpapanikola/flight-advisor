@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.nikolanedeljkovic.flightadvisor.repository.UserRepository;
-import com.nikolanedeljkovic.flightadvisor.user.User;
+import com.nikolanedeljkovic.flightadvisor.domain.user.User;
 
 
 @Service
