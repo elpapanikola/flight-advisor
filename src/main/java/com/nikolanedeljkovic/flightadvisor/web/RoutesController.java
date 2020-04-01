@@ -11,7 +11,7 @@ import com.nikolanedeljkovic.flightadvisor.service.AirportService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/routes")
+@RequestMapping("/api/routes")
 @RequiredArgsConstructor
 public class RoutesController {
 	
@@ -20,6 +20,12 @@ public class RoutesController {
 	@PostMapping("/airport/upload")
 	public boolean uploadAirports(@RequestParam("file") MultipartFile file) {
 		airportService.uploadAirports(file);
+		return true;
+	}
+	
+	@PostMapping("/upload")
+	public boolean uploadRoutes(@RequestParam("file") MultipartFile file) {
+		airportService.uploadRoutes(file);
 		return true;
 	}
 }

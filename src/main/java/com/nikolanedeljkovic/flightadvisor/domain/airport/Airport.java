@@ -1,15 +1,14 @@
 package com.nikolanedeljkovic.flightadvisor.domain.airport;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.TimeZone;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.nikolanedeljkovic.flightadvisor.domain.city.City;
 
@@ -26,7 +25,6 @@ import lombok.NoArgsConstructor;
 public class Airport {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 	
 	/*
@@ -56,9 +54,9 @@ public class Airport {
 	
 	@Column
 	private Integer altitude;
-	
+
 	@Column
-	private Integer tzOffset;
+	private Float tzOffset;
 	
 	@Column
 	private Character dst;
@@ -71,4 +69,7 @@ public class Airport {
 	
 	@Column
 	private String informationSource;
+	
+	@OneToMany
+	private List<Route> routes;
 }
