@@ -4,8 +4,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface AirportService {
 
-	void uploadAirports(MultipartFile file);
+	String uploadAirports(MultipartFile file);
 
-	void uploadRoutes(MultipartFile file);
+	String uploadRoutes(MultipartFile file);
 	
 }

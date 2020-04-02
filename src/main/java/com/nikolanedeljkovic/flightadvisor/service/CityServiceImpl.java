@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.nikolanedeljkovic.flightadvisor.domain.city.City;
@@ -14,6 +16,7 @@ import com.nikolanedeljkovic.flightadvisor.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class CityServiceImpl implements CityService {
@@ -47,5 +50,21 @@ public class CityServiceImpl implements CityService {
 				.modifiedAt(LocalDateTime.now())
 				.build());
 	}
+
+	@Override
+	public String deleteComment(Long commentId) {
+		commentRepository.deleteById(commentId);
+		return "Deleted";
+	}
+
+	@Override
+	public Comment updateComment(Long commentId, String comment) {
+		Optional<Comment> oldComment = commentRepository.findById(commentId);
+		Comment newComment = oldComment.get();
+		newComment.setComment(comment);
+		newComment.setModifiedAt(LocalDateTime.now());
+		return commentRepository.save(newComment);
+	}
+	
 
 }

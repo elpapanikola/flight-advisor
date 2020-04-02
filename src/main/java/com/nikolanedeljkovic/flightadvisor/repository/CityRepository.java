@@ -21,4 +21,7 @@ public interface CityRepository extends JpaRepository<City, Long> {
 			"ORDER BY a.id, a.created_at desc;", 
 			  nativeQuery = true)
 	List<City> getAllCitiesWithSpecifiedNumberOfComments(Optional<Integer> numberOfComments);
+	
+	 @Query("SELECT * FROM City WHERE LOWER(name) LIKE LOWER(concat('%', ?1, '%'))")
+	 List<City> findAllLike(String name);
 }

@@ -1,5 +1,7 @@
 package com.nikolanedeljkovic.flightadvisor.web;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,15 +25,13 @@ public class RoutesController {
 	private final ShortestPathService shortestPathService;
 	
 	@PostMapping("/airport/upload")
-	public boolean uploadAirports(@RequestParam("file") MultipartFile file) {
-		airportService.uploadAirports(file);
-		return true;
+	public ResponseEntity<String> uploadAirports(@RequestParam("file") MultipartFile file) {
+		return new ResponseEntity<String>(airportService.uploadAirports(file), HttpStatus.OK);
 	}
 	
 	@PostMapping("/upload")
-	public boolean uploadRoutes(@RequestParam("file") MultipartFile file) {
-		airportService.uploadRoutes(file);
-		return true;
+	public ResponseEntity<String> uploadRoutes(@RequestParam("file") MultipartFile file) {
+		return new ResponseEntity<String>(airportService.uploadRoutes(file), HttpStatus.OK);
 	}
 	
 	@GetMapping("/shortest/{sourceCity}/{destinationCity}")
