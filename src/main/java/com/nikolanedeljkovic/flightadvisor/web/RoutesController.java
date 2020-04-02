@@ -1,6 +1,5 @@
 package com.nikolanedeljkovic.flightadvisor.web;
 
-import org.jgrapht.GraphPath;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.nikolanedeljkovic.flightadvisor.domain.graph.Edge;
+import com.nikolanedeljkovic.flightadvisor.response.PathDTO;
 import com.nikolanedeljkovic.flightadvisor.service.AirportService;
 import com.nikolanedeljkovic.flightadvisor.service.ShortestPathService;
 
@@ -36,9 +35,8 @@ public class RoutesController {
 	}
 	
 	@GetMapping("/shortest/{sourceCity}/{destinationCity}")
-	public boolean findShortestRoute(@PathVariable String sourceCity, @PathVariable String destinationCity) {
-		shortestPathService.findShortestPath(sourceCity, destinationCity);
-		return true;
+	public PathDTO findShortestRoute(@PathVariable String sourceCity, @PathVariable String destinationCity) {
+		return shortestPathService.findShortestPath(sourceCity, destinationCity);		
 	}
 
 }

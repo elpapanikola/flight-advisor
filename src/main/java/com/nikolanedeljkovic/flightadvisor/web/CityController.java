@@ -21,8 +21,8 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/cities")
-public class CitiyController {
+@RequestMapping("/api/cities")
+public class CityController {
 	
 	private final CityService cityService;
 	private final JwtTokenProvider jwtTokenProvider;
@@ -32,7 +32,7 @@ public class CitiyController {
 		return cityService.addCity(city);
 	}
 	
-	@GetMapping({"/cities","/cities/{numberOfComments}"})
+	@GetMapping({"/all","/all/{numberOfComments}"})
 	public List<City> getAllCities(@PathVariable Optional<Integer> numberOfComments) {
 		if(numberOfComments.isPresent())
 			return cityService.getAllCities(numberOfComments);

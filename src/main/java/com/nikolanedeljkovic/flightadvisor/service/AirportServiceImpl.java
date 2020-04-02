@@ -12,9 +12,11 @@ import com.nikolanedeljkovic.flightadvisor.domain.airport.AirportImport;
 import com.nikolanedeljkovic.flightadvisor.domain.airport.ImportReader;
 import com.nikolanedeljkovic.flightadvisor.domain.airport.Route;
 import com.nikolanedeljkovic.flightadvisor.domain.airport.RouteImport;
+import com.nikolanedeljkovic.flightadvisor.domain.city.City;
 import com.nikolanedeljkovic.flightadvisor.repository.AirportRepository;
 import com.nikolanedeljkovic.flightadvisor.repository.CityRepository;
 import com.nikolanedeljkovic.flightadvisor.repository.RouteRepository;
+import com.nikolanedeljkovic.flightadvisor.util.FieldMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,7 +38,12 @@ public class AirportServiceImpl implements AirportService {
 			List<AirportImport> importedAirports = reader.read(file.getInputStream(), AirportImport.class);
 			List<Airport> airports = new ArrayList<>();
 			
-			importedAirports.parallelStream()/* .filter(c -> cities.contains(c.getCity())) */
+			  List<City> citiess = new ArrayList<>(); importedAirports.stream().map(a ->
+			  a.getCity()).distinct().forEach(a ->
+			  citiess.add(City.builder().name(a).build()));
+			  cityRepository.saveAll(citiess); System.out.println(citiess);
+			 
+			importedAirports.stream()/* .filter(c -> cities.contains(c.getCity())) */
 					.forEach(a -> airports.add(FieldMapper.buildDomainAirport(a, cityRepository.findByName(a.getCity()))));
 			airportRepository.saveAll(airports);
 		} catch (IllegalArgumentException | IOException e) {

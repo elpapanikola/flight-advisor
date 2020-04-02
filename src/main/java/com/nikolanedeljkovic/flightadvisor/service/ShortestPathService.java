@@ -1,11 +1,9 @@
 package com.nikolanedeljkovic.flightadvisor.service;
 
-import org.jgrapht.GraphPath;
-
-import com.nikolanedeljkovic.flightadvisor.domain.graph.Edge;
+import com.nikolanedeljkovic.flightadvisor.response.PathDTO;
 
 public interface ShortestPathService {
 
-	void findShortestPath(String sourceCity, String destinationCity);
+	PathDTO findShortestPath(String sourceCity, String destinationCity);
 
 }

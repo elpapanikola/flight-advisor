@@ -7,5 +7,7 @@ import com.nikolanedeljkovic.flightadvisor.domain.airport.Route;
 
 @Repository
 public interface RouteRepository extends JpaRepository<Route, Long> {
-
+	
+	Route findBySourceAirportAndDestinationAirportAndAirline(String sourceAirport, String destinationAirport, String airline);
+	
 }

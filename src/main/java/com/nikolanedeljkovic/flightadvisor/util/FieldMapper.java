@@ -1,4 +1,4 @@
-package com.nikolanedeljkovic.flightadvisor.service;
+package com.nikolanedeljkovic.flightadvisor.util;
 
 import java.math.BigDecimal;
 import java.util.TimeZone;
@@ -51,10 +51,5 @@ public class FieldMapper {
 			return true;
 		}
 		return false;
-	}
-
-
-	public static void mapPath(GraphPath<String, Edge> graph) {
-		
 	}
 }

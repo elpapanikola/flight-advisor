@@ -44,8 +44,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	 http.authorizeRequests()
-         .antMatchers("/").permitAll()
-         .antMatchers("/cities").hasAuthority("ADMIN")
+         .antMatchers("/api/routes/shortest/**").hasAnyAuthority("ADMIN", "USER")
+         .antMatchers("/api/cities").hasAuthority("ADMIN")
+         .antMatchers("/api/cities/**").hasAnyAuthority("ADMIN", "USER")
          .antMatchers("/h2-console/**").permitAll();
 
     	 http.csrf().disable();

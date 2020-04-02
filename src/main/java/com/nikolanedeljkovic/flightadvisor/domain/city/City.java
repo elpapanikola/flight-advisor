@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 
 import com.nikolanedeljkovic.flightadvisor.domain.airport.Airport;
 
@@ -27,12 +28,15 @@ public class City {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank
 	@Column
 	private String name;
 	
+	@NotBlank
 	@Column
 	private String country;
 	
+	@NotBlank
 	@Column
 	private String description;
 	
