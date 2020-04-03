@@ -24,12 +24,12 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 
 	private final UserRepository userRepository;
-	private final BCryptPasswordEncoder passwordEncoder;
-	private final RolesRepository rolesRepository;
+	private  BCryptPasswordEncoder passwordEncoder;
+	private RolesRepository rolesRepository;
 	private final JwtTokenProvider jwtTokenProvider;
 	
-	@Transactional
 	@Override
+	@Transactional
 	public String signUpUser(User user) throws ResponseStatusException {
 		validateSignup(user);
 		List<Roles> roles = new ArrayList<>();
