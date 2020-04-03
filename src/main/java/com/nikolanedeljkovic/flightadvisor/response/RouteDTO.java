@@ -14,4 +14,5 @@ public class RouteDTO {
 	String destinationAirportName;
 	String destinationCityName;
 	Float price;
+	Double distance;
 }

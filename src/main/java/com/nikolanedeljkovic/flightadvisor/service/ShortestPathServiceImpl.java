@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DirectedWeightedMultigraph;
@@ -18,6 +20,7 @@ import com.nikolanedeljkovic.flightadvisor.repository.CityRepository;
 import com.nikolanedeljkovic.flightadvisor.repository.RouteRepository;
 import com.nikolanedeljkovic.flightadvisor.response.PathDTO;
 import com.nikolanedeljkovic.flightadvisor.response.RouteDTO;
+import com.nikolanedeljkovic.flightadvisor.util.DistanceCalculator;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,14 +35,15 @@ public class ShortestPathServiceImpl implements ShortestPathService {
 	private final CityRepository cityRepository;
 
 	@Override
+	@Transactional
 	public PathDTO findShortestPath(String sourceCity, String destinationCity) throws NullPointerException {
 
 		List<Airport> sourceAirports = airportRepository.findByCityId(cityRepository.findByName(sourceCity).getId());
 		List<Airport> destinationAirports = airportRepository
 				.findByCityId(cityRepository.findByName(destinationCity).getId());
-		
+
 		DirectedWeightedMultigraph<String, Edge> graph = createGraph();
-	
+
 		List<GraphPath<String, Edge>> paths = new ArrayList<>();
 		log.info("Searching for shortest route...");
 		sourceAirports.stream().forEach(source -> {
@@ -58,21 +62,35 @@ public class ShortestPathServiceImpl implements ShortestPathService {
 
 	private PathDTO formatResponse(List<Route> routes, Double weight) {
 		List<RouteDTO> routeDto = new ArrayList<>();
-		routes.stream().forEach(r -> routeDto.add(RouteDTO.builder()
+		routes.stream().forEach(r -> {
+			Airport sourceAirport = airportRepository.findByAirportId(r.getSourceAirportId());
+			Airport destinationAirport = airportRepository.findByAirportId(r.getDestinationAirportId());
+			routeDto.add(RouteDTO.builder()
 				.sourceAirportIATA(r.getSourceAirport())
-				.sourceAirportName(airportRepository.findByAirportId(r.getSourceAirportId()).getName())
+				.sourceAirportName(sourceAirport.getName())
 				.destinactionAirportIATA(r.getDestinationAirport())
-				.destinationAirportName(airportRepository.findByAirportId(r.getDestinationAirportId()).getName())
+				.destinationAirportName(destinationAirport.getName())
 				.airline(r.getAirline())
-				.sourceCityName(airportRepository.findByAirportId(r.getSourceAirportId()).getCity().getName())
-				.destinationCityName(airportRepository.findByAirportId(r.getDestinationAirportId()).getCity().getName())
-				.price(r.getPrice()).build()));
+				.sourceCityName(sourceAirport.getCity().getName())
+				.destinationCityName(destinationAirport.getCity().getName())
+				.distance(DistanceCalculator.distance(sourceAirport, destinationAirport))
+				.price(r.getPrice()).build());
+		});
 		
 		
-		return PathDTO.builder().routes(routeDto).price(weight).build();
+		return PathDTO.builder().routes(routeDto).price(weight).cumulateDistance(calculateCumulatedDistance(routeDto)).build();
 	}
 
-	private GraphPath<String, Edge> shortestPath(DirectedWeightedMultigraph<String, Edge> flightGraph, Airport sourceAirport, Airport desitnationAirport) {
+	private Double calculateCumulatedDistance(List<RouteDTO> routeDto) {
+		Double distance = 0.0;
+		for(RouteDTO r : routeDto) {
+			distance += r.getDistance();
+		}
+		return distance;
+	}
+
+	private GraphPath<String, Edge> shortestPath(DirectedWeightedMultigraph<String, Edge> flightGraph,
+			Airport sourceAirport, Airport desitnationAirport) {
 		GraphPath<String, Edge> min = null;
 		if (flightGraph.containsVertex(sourceAirport.getIATA())
 				&& flightGraph.containsVertex(desitnationAirport.getIATA())) {
@@ -98,10 +116,12 @@ public class ShortestPathServiceImpl implements ShortestPathService {
 		return flightGraph;
 	}
 
-	private List<Route> resolveToRoutes(DirectedWeightedMultigraph<String, Edge> flightGraph, Optional<GraphPath<String, Edge>> shortestPath) {
+	private List<Route> resolveToRoutes(DirectedWeightedMultigraph<String, Edge> flightGraph,
+			Optional<GraphPath<String, Edge>> shortestPath) {
 		List<Route> routes = new ArrayList<>();
 		shortestPath.get().getEdgeList().stream().forEach(e -> {
-			routes.add(routeRepository.findBySourceAirportAndDestinationAirportAndAirline(flightGraph.getEdgeSource(e), flightGraph.getEdgeTarget(e), e.getAirline()));
+			routes.add(routeRepository.findBySourceAirportAndDestinationAirportAndAirline(flightGraph.getEdgeSource(e),
+					flightGraph.getEdgeTarget(e), e.getAirline()));
 		});
 		return routes;
 	}

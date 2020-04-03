@@ -3,14 +3,11 @@ package com.nikolanedeljkovic.flightadvisor.util;
 import java.math.BigDecimal;
 import java.util.TimeZone;
 
-import org.jgrapht.GraphPath;
-
 import com.nikolanedeljkovic.flightadvisor.domain.airport.Airport;
 import com.nikolanedeljkovic.flightadvisor.domain.airport.AirportImport;
 import com.nikolanedeljkovic.flightadvisor.domain.airport.Route;
 import com.nikolanedeljkovic.flightadvisor.domain.airport.RouteImport;
 import com.nikolanedeljkovic.flightadvisor.domain.city.City;
-import com.nikolanedeljkovic.flightadvisor.domain.graph.Edge;
 
 public class FieldMapper {
 

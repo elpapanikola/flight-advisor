@@ -10,4 +10,5 @@ import lombok.Data;
 public class PathDTO {
 	Double price;
 	List<RouteDTO> routes;
+	Double cumulateDistance;
 }
