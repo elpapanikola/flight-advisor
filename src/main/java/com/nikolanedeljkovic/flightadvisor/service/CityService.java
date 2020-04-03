@@ -11,6 +11,6 @@ public interface CityService {
 	Comment postComment(String cityName, Comment comment, String username);
 	List<City> getAllCities();
 	List<City> getAllCities(Optional<Integer> numberOfComments);
-	String deleteComment(Long commentId);
-	Comment updateComment(Long commentId, String comment);
+	String deleteComment(Long commentId, String username);
+	Comment updateComment(Long commentId, String comment, String username);
 }

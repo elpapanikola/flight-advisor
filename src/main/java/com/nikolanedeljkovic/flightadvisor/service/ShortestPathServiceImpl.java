@@ -32,14 +32,14 @@ public class ShortestPathServiceImpl implements ShortestPathService {
 	private final CityRepository cityRepository;
 
 	@Override
-	public PathDTO findShortestPath(String sourceCity, String destinationCity) {
+	public PathDTO findShortestPath(String sourceCity, String destinationCity) throws NullPointerException {
 
 		List<Airport> sourceAirports = airportRepository.findByCityId(cityRepository.findByName(sourceCity).getId());
 		List<Airport> destinationAirports = airportRepository
 				.findByCityId(cityRepository.findByName(destinationCity).getId());
-
-		DirectedWeightedMultigraph<String, Edge> graph = createGraph();
 		
+		DirectedWeightedMultigraph<String, Edge> graph = createGraph();
+	
 		List<GraphPath<String, Edge>> paths = new ArrayList<>();
 		log.info("Searching for shortest route...");
 		sourceAirports.stream().forEach(source -> {
@@ -50,7 +50,6 @@ public class ShortestPathServiceImpl implements ShortestPathService {
 				}
 			});
 		});
-		
 		Optional<GraphPath<String, Edge>> shortestPath = paths.stream().min(byWeight);
 		List<Route> routes = resolveToRoutes(graph, shortestPath);
 		log.info("Formating shortest path response...");

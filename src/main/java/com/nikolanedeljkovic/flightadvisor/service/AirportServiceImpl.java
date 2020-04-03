@@ -55,7 +55,7 @@ public class AirportServiceImpl implements AirportService {
 			importedAirports.stream()/* .filter(c -> cities.contains(c.getCity())) */
 					.forEach(a -> airports.add(FieldMapper.buildDomainAirport(a, cityRepository.findByName(a.getCity()))));
 			airportRepository.saveAll(airports);
-		} catch (IllegalArgumentException | IOException e) {
+		} catch (IllegalArgumentException | IOException | NullPointerException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, UPLOAD_FAILED);
 		}
 		return UPLOAD_SUCCESSFUL;
@@ -71,7 +71,7 @@ public class AirportServiceImpl implements AirportService {
 			
 			importedRoutes.stream().forEach(r -> routes.add(FieldMapper.buildDomainRoute(r)));
 			routeRepository.saveAll(routes);			
-		} catch (IllegalArgumentException | IOException e) {
+		} catch (IllegalArgumentException | IOException | NullPointerException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, UPLOAD_FAILED);
 		}	
 		return UPLOAD_SUCCESSFUL;
