@@ -16,7 +16,6 @@ import com.nikolanedeljkovic.flightadvisor.domain.airport.AirportImport;
 import com.nikolanedeljkovic.flightadvisor.domain.airport.ImportReader;
 import com.nikolanedeljkovic.flightadvisor.domain.airport.Route;
 import com.nikolanedeljkovic.flightadvisor.domain.airport.RouteImport;
-import com.nikolanedeljkovic.flightadvisor.domain.city.City;
 import com.nikolanedeljkovic.flightadvisor.repository.AirportRepository;
 import com.nikolanedeljkovic.flightadvisor.repository.CityRepository;
 import com.nikolanedeljkovic.flightadvisor.repository.RouteRepository;

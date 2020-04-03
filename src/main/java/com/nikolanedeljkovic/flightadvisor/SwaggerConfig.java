@@ -1,6 +1,4 @@
 package com.nikolanedeljkovic.flightadvisor;
-import static com.google.common.collect.Lists.newArrayList;
-
 import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
@@ -11,7 +9,6 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.BasicAuth;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
