@@ -44,9 +44,6 @@ public class FieldMapper {
 	}
 	
 	private static boolean isNullValue(String value) {
-		if (value == null || value.equals("\\N") || value.equals("")) {
-			return true;
-		}
-		return false;
+		return value == null || value.equals("\\N") || value.equals("");
 	}
 }

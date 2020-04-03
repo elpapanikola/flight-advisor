@@ -1,5 +1,6 @@
 package com.nikolanedeljkovic.flightadvisor.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.nikolanedeljkovic.flightadvisor.domain.user.Login;
+import com.nikolanedeljkovic.flightadvisor.domain.user.Roles;
 import com.nikolanedeljkovic.flightadvisor.domain.user.User;
 import com.nikolanedeljkovic.flightadvisor.repository.RolesRepository;
 import com.nikolanedeljkovic.flightadvisor.repository.UserRepository;
@@ -30,9 +32,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String signUpUser(User user) throws ResponseStatusException {
 		validateSignup(user);
-		
+		List<Roles> roles = new ArrayList<>();
+		roles.add(rolesRepository.findByRole("USER"));
 		user.setPassword(passwordEncoder.encode(user.getPassword()));		
-		user.setRoles(List.of(rolesRepository.findByRole("USER")));
+		user.setRoles(roles);
 		userRepository.save(user);		
 		return jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
 	}

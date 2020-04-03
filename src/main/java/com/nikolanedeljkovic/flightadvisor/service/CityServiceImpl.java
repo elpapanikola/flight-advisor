@@ -17,7 +17,9 @@ import com.nikolanedeljkovic.flightadvisor.repository.CommentRepository;
 import com.nikolanedeljkovic.flightadvisor.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -44,6 +46,7 @@ public class CityServiceImpl implements CityService {
 
 	@Override
 	public Comment postComment(String cityName, Comment comment, String username) {
+		log.info("Posting comment");
 		City city = cityRepository.findByName(cityName);
 		if (city != null) {
 			return commentRepository.save(Comment.builder().city(city).user(userRepository.findByUsername(username))
@@ -56,6 +59,7 @@ public class CityServiceImpl implements CityService {
 	public String deleteComment(Long commentId, String username) {
 		if (commentRepository.findById(commentId).get().getUser().getUsername().equals(username)) {
 			commentRepository.deleteById(commentId);
+			log.info("Comment deleted");
 			return "Deleted";
 		}
 		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can't delete comment posted by someone else.");
