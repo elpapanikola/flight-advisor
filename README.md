@@ -15,7 +15,7 @@ java -jar flight-advisor/target/flight-advisor-exec.jar
 The application ships with the Swagger UI, so simply browsing to [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) will allow you to explore the application.
 
 # H2 
-Since currently application uses onlu H2 DB. You can reach H2 console at [http://localhost:8080/h2-console.html]
+Since currently application uses only H2 DB. You can reach H2 console at [http://localhost:8080/h2-console.html]
 
 Credentials: 
 Username = admin
