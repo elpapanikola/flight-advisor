@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.nikolanedeljkovic</groupId>
 	<artifactId>flight-advisor</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>flight-advisor</name>
 	<description>API for finding the cheapest flight</description>
